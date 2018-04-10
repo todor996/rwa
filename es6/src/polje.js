@@ -44,7 +44,7 @@ export function renderSnake(ctx, snake) {
 export function renderGameOver(ctx) {
  ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
   ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-  let q=localStorage.getItem("score");
+  //let q=localStorage.getItem("score");
   let textX = CANVAS_WIDTH / 2;
   let textY = CANVAS_HEIGHT / 2;
  /* let table=document.querySelector("#tbl");
@@ -58,7 +58,7 @@ export function renderGameOver(ctx) {
   table.appendChild(thead);
   table.style.border="1px solid black";
   canvas.style.display="none";*/
- drawText(ctx, q, textX, textY, 'black', 25);
+ drawText(ctx, "GAME OVE", textX, textY, 'black', 25);
 }
 
 
