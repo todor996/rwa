@@ -25,7 +25,7 @@ module: {
       use: {
         loader: 'babel-loader',
         options: {
-          presets: ['es2016']
+          presets: ['env']
         }
       }
     }
