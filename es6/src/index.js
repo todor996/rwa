@@ -56,7 +56,6 @@ let direction$ = keydown$
  * between the snake and the apples
  */
 let length$ = new BehaviorSubject(SNAKE_LENGTH);
-
 /**
  * Accumulates the length of the snake (number of body segments)
  */

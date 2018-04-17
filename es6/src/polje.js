@@ -5,7 +5,7 @@ export const GAP_SIZE = 1;
 export const CELL_SIZE = 10;
 export const CANVAS_WIDTH = COLS * (CELL_SIZE + GAP_SIZE);
 export const CANVAS_HEIGHT = ROWS * (CELL_SIZE + GAP_SIZE);
-
+let s;
 export function createCanvasElement() {
   const canvas = document.createElement('canvas');
   canvas.width = CANVAS_WIDTH;
@@ -26,7 +26,8 @@ export function renderScene(ctx, scene) {
 export function renderScore(ctx, score) {
   let textX = CANVAS_WIDTH / 2;
   let textY = CANVAS_HEIGHT / 2;
-  localStorage.setItem("score",score);
+  s=score;
+  //localStorage.setItem("score",score);
   drawText(ctx, score.toString(), textX, textY, 'rgba(0, 0, 0, 0.1)', 150);
 }
 
@@ -41,24 +42,24 @@ export function renderSnake(ctx, snake) {
 }
 
 
-export function renderGameOver(ctx) {
- ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
+export function renderGameOver(canvas) {
+ /*ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
   ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
-  //let q=localStorage.getItem("score");
+  let q=localStorage.getItem("score");
   let textX = CANVAS_WIDTH / 2;
   let textY = CANVAS_HEIGHT / 2;
- /* let table=document.querySelector("#tbl");
+ */ let table=document.querySelector("#tbl");
   let thead=document.createElement("thead");
   let th=document.createElement("th");
   let th2=document.createElement("th");
   th.innerText="User";
-  th2.innerText="Score";
+  th2.innerText=s;
   thead.appendChild(th);
   thead.appendChild(th2);
   table.appendChild(thead);
   table.style.border="1px solid black";
-  canvas.style.display="none";*/
- drawText(ctx, "GAME OVE", textX, textY, 'black', 25);
+  canvas.style.display="none";
+ //drawText(ctx, s, textX, textY, 'black', 25);
 }
 
 
