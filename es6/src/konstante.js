@@ -6,7 +6,7 @@ export const POINTS_PER_APPLE = 1;
 
 export const SPEED = 200;
 export const FPS = 60;
-
+export const URL="http://localhost:3000/scores";
 export const DIRECTIONS = {
   65: { x: -1, y: 0 },
   39: { x: 1, y: 0 },
