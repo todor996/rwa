@@ -4,6 +4,21 @@
             "id":1,
             "username":"todor",
             "score":5
+        },
+        {
+            "id":2,
+            "username":"voja",
+            "score":4
+        },
+        {
+            "id":3,
+            "username":"todors",
+            "score":2
+        } ,
+               {
+            "id":4,
+            "username":"todo2r",
+            "score":1
         }
     ]
 }

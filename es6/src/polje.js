@@ -1,11 +1,11 @@
-
+import {Baza} from './baza';
 export const COLS = 30;
 export const ROWS = 30;
 export const GAP_SIZE = 1;
 export const CELL_SIZE = 10;
 export const CANVAS_WIDTH = COLS * (CELL_SIZE + GAP_SIZE);
 export const CANVAS_HEIGHT = ROWS * (CELL_SIZE + GAP_SIZE); 
-let s;
+let Score;
 export function createCanvasElement() {
   const canvas = document.createElement('canvas');
   canvas.width = CANVAS_WIDTH;
@@ -26,7 +26,7 @@ export function renderScene(ctx, scene) {
 export function renderScore(ctx, score) {
   let textX = CANVAS_WIDTH / 2;
   let textY = CANVAS_HEIGHT / 2;
-  s=score;
+  Score=score;
   //localStorage.setItem("score",score);
   drawText(ctx, score.toString(), textX, textY, 'rgba(0, 0, 0, 0.1)', 150);
 }
@@ -48,20 +48,53 @@ export function renderGameOver(canvas) {
   let q=localStorage.getItem("score");
   let textX = CANVAS_WIDTH / 2;
   let textY = CANVAS_HEIGHT / 2;
- */ let table=document.querySelector("#tbl");
+  
+ */
+Baza.get()
+.then(res=>
+  {
+  console.log(res);
+  const table=document.querySelector("#tbl");
+fillTable(table,res);
+  canvas.style.display="none";
+  
+  })
+
+}
+function fillTable(table,array){
+  
   let thead=document.createElement("thead");
   let th=document.createElement("th");
   let th2=document.createElement("th");
+  let tr;
+  let tdUser;
+  let tdScore;
   th.innerText="User";
-  th2.innerText=s;
+  th2.innerText="Score";
   thead.appendChild(th);
   thead.appendChild(th2);
   table.appendChild(thead);
-  table.style.border="1px solid black";
-  canvas.style.display="none";
- //drawText(ctx, s, textX, textY, 'black', 25);
-}
 
+  table.style.border="1px solid black";
+  array.forEach(obj=>{
+  tr=document.createElement("tr");
+  tdUser=document.createElement("td");
+  tdUser.innerText=obj['username'];
+  tdScore=document.createElement("td");
+  tdScore.innerText=obj['score'];
+  tr.appendChild(tdUser);
+  tr.appendChild(tdScore);
+  table.appendChild(tr);
+  })
+  let body=document.body;
+  let div=document.createElement("div");
+  div.innerText=`Your score is ${Score}, if you would like to save it to Ladder, press Save`;
+  let button=document.createElement("button");
+  button.innerText="Restart Game";
+  button.onclick=()=>window.location.reload(true);
+  body.appendChild(button);
+  body.appendChild(div);
+}
 
 export function getRandomPosition(snake = []) {
   let position = {
