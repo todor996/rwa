@@ -88,12 +88,21 @@ function fillTable(table,array){
   })
   let body=document.body;
   let div=document.createElement("div");
+  let div2=document.createElement("div");
+  div2.style.margin="3px";
+  div2.style.cssFloat="left";
+
   div.innerText=`Your score is ${Score}, if you would like to save it to Ladder, press Save`;
   let button=document.createElement("button");
   button.innerText="Restart Game";
+  
   button.onclick=()=>window.location.reload(true);
-  body.appendChild(button);
+  let button2=document.createElement("button");
+  button2.innerText="Save score";
+  div2.appendChild(button);
+  div2.appendChild(button2);
   body.appendChild(div);
+  body.appendChild(div2);
 }
 
 export function getRandomPosition(snake = []) {
