@@ -40,8 +40,9 @@ export function renderApples(ctx, apples=[]) {
 export function renderSnake(ctx, snake) {
   snake.forEach((segment, index) => paintCell(ctx, wrapBounds(segment), getSegmentColor(index)));
 }
-
-
+function sr(a,b){
+  return a['score']<b['score']
+}
 export function renderGameOver(canvas) {
  /*ctx.fillStyle = 'rgba(255, 255, 255, 0.7)';
   ctx.fillRect(0, 0, CANVAS_WIDTH, CANVAS_HEIGHT);
@@ -53,9 +54,12 @@ export function renderGameOver(canvas) {
 Baza.get()
 .then(res=>
   {
-  console.log(res);
+
+  let l2=res.sort(sr);
+  console.log(l2);
   const table=document.querySelector("#tbl");
-fillTable(table,res);
+  
+  fillTable(table,l2);
   canvas.style.display="none";
   
   })
@@ -99,8 +103,28 @@ function fillTable(table,array){
   button.onclick=()=>window.location.reload(true);
   let button2=document.createElement("button");
   button2.innerText="Save score";
+  button2.disabled="disabled";
+  button2.onclick=()=>{
+    let User={
+      'username':input.value,
+      'score':Score
+    }
+    Baza.addScore(User)
+    .then(res=>console.log(res));
+  }
+  let input=document.createElement("input");
+  input.onkeydown=()=>{
+
+    if(input.value.length)
+    
+      button2.disabled="";
+      
+    else button2.disabled="disabled";
+  }
   div2.appendChild(button);
+  div2.appendChild(input);
   div2.appendChild(button2);
+
   body.appendChild(div);
   body.appendChild(div2);
 }

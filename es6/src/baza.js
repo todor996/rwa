@@ -7,8 +7,15 @@ static get()
     .then(resp=>resp.json())
 }
 
-static post(hs)
-{
-    
-}
+static addScore(User){
+    return fetch( URL, {
+      method: 'post',
+      headers: {
+        'Accept': 'application/json, text/plain, */*',
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(User)
+    })
+    .then(res=>res.json())
+}  
 }
