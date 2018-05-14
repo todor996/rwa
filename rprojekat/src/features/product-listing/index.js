@@ -1,6 +1,7 @@
 import React from 'react'
 import ProductListItem from './product-list-item'
 import {connect} from 'react-redux'
+import {  cartItemsWithQuantities } from '../cart';
 
 function ProductListing(props){
     return <div className="product-listing">
@@ -8,6 +9,7 @@ function ProductListing(props){
             props.products.map(product=>
             <ProductListItem product={product}
             addToCart={props.addToCart}
+            cart={cartItemsWithQuantities(props.cart)}
             />)
         }
     </div>
