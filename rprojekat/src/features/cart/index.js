@@ -1,5 +1,11 @@
 import React from 'react'
 import {connect } from 'react-redux'
+function sort(items){
+    return items.sort((a,b)=>{
+    a.id<b.id
+    })
+}
+
 
 function Cart(props){
     return <table>
@@ -14,7 +20,7 @@ function Cart(props){
         </thead>
         <tbody>
             {
-                props.cart.map(item=><tr>
+                sort(props.cart).map(item=><tr>
                     <td>{item.name}</td>
                     <td>{item.quantity}</td>
                     <td>
