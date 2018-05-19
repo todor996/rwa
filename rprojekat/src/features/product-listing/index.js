@@ -9,6 +9,7 @@ function ProductListing(props){
             props.products.map(product=>
             <ProductListItem product={product}
             addToCart={props.addToCart}
+            removeFromCart={props.removeFromCart}
             cartItem={props.cart.filter(cartItem=>cartItem.id===product.id)[0]}
             />)
         }

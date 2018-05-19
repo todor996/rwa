@@ -9,13 +9,24 @@ const addToCart=(cart,item)=>{
     :[...cartWithoutItem(cart,item),{...cartItem, quantity:cartItem.quantity+1}]
 }
 
+const removeFromCart=(cart,item)=>{
+    return item.quantity===1
+    ?[ ...cartWithoutItem(cart,item)]
+    :[ ...cartWithoutItem(cart,item),{...item,quantity:item.quantity-1}]
+}
+
+const removeAllFromCart=(cart,item)=>{
+    return [...cartWithoutItem(cart,item)]
+}
 const cartReducer=(state=[], action)=>{
     switch(action.type){
         case 'ADD':
             return addToCart(state, action.payload)
         case 'REMOVE':
-            const firstMatchIndex=state.indexOf(action.payload)
-            return state.filter((item,index)=>index!==firstMatchIndex)
+           return removeFromCart(state, action.payload)
+
+        case 'ALL':
+        return removeAllFromCart(state,action.payload)
         default: return state;    
     
     
