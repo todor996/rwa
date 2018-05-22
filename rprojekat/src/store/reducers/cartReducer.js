@@ -1,3 +1,5 @@
+import * as actions from '../actions'
+
 const cartWithoutItem=(cart,item)=>cart.filter(cartItem=>cartItem.id!==item.id)
 
 const itemInCart=(cart,item)=> cart.filter(cartItem=>cartItem.id===item.id)[0]
@@ -20,12 +22,12 @@ const removeAllFromCart=(cart,item)=>{
 }
 const cartReducer=(state=[], action)=>{
     switch(action.type){
-        case 'ADD':
+        case actions.ADD:
             return addToCart(state, action.payload)
-        case 'REMOVE':
+        case actions.REMOVE:
            return removeFromCart(state, action.payload)
 
-        case 'ALL':
+        case actions.ALL:
         return removeAllFromCart(state,action.payload)
         default: return state;    
     

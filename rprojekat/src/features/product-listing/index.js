@@ -1,7 +1,7 @@
 import React from 'react'
 import ProductListItem from './product-list-item'
 import {connect} from 'react-redux'
-
+import * as actions from '../../store/actions'
 
 function ProductListing(props){
     return <div className="product-listing">
@@ -25,10 +25,10 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
     return {
         addToCart: (item)=>{
-            dispatch({ type: 'ADD', payload: item})
+            dispatch({ type: actions.ADD, payload: item})
         },
         removeFromCart: (item)=>{
-            dispatch({ type: 'REMOVE', payload: item})
+            dispatch({ type: actions.REMOVE, payload: item})
         }
     }
 }

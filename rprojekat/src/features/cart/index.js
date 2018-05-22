@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect } from 'react-redux'
+import * as actions from '../../store/actions'
 function sort(items){
     return items.sort((a,b)=>{
     a.id<b.id
@@ -56,13 +57,13 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
     return {
         addToCart: (item)=>{
-            dispatch({type:'ADD',payload:item})
+            dispatch({type:actions.ADD,payload:item})
         },
         removeFromCart: (item)=>{
-            dispatch({type:'REMOVE',payload:item})
+            dispatch({type:actions.REMOVE,payload:item})
         },
         removeAllFromCart: (item)=>{
-            dispatch({type:'ALL',payload:item})
+            dispatch({type:actions.ALL,payload:item})
         }
     }
 
