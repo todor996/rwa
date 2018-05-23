@@ -25,21 +25,21 @@ function Cart(props){
                     <td>{item.name}</td>
                     <td>{item.quantity}</td>
                     <td>
-                        <button
+                        <button className="btn btn-default btn-sm"
                         onClick={(e)=>props.addToCart(item)}
-                        >+
+                        ><span class="glyphicon glyphicon-plus"></span> 
 
                         </button>
                     </td>
-                    <td><button
+                    <td><button className="btn btn-default btn-sm"
                         onClick={(e)=>props.removeFromCart(item)}
-                        >-
+                        ><span class="glyphicon glyphicon-minus"></span> 
 
                         </button></td>
                     <td>
-                        <button
+                        <button className="btn btn-default btn-sm"
                         onClick={()=>props.removeAllFromCart(item)}
-                        >Remove all</button>
+                        ><span class="glyphicon glyphicon-remove"></span> </button>
                     </td>
                 </tr>)
             }

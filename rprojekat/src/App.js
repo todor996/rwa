@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import {NavLink} from 'react-router-dom';
 
 import Router from './Router';
-const Navigation=(props)=><nav>
-<ul>
+const Navigation=(props)=><nav className="navbar navbar-inverse">
+<ul className="nav navbar-nav">
 <li><NavLink to='/'>Home </NavLink></li>
 <li><NavLink to='/cart'>Cart </NavLink></li>
 
