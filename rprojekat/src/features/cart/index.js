@@ -1,6 +1,6 @@
 import React from 'react'
 import {connect } from 'react-redux'
-import * as actions from '../../store/actions'
+import * as actions from '../../store/actions/actionType'
 function sort(items){
     return items.sort((a,b)=>{
     a.id<b.id

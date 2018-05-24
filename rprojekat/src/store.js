@@ -1,6 +1,9 @@
-import {createStore,combineReducers} from 'redux'
+import {createStore,combineReducers,applyMiddleware, compose} from 'redux'
 import cartReducer from './store/reducers/cartReducer'
+import productsReducer from './store/reducers/productReducer'
+import createSagaMiddleware from "redux-saga";
 
+import {watchProducts} from './store/sagas/index';
 function saveToLocalStorage(state){
     try{
         const serializedState=JSON.stringify(state)
@@ -23,17 +26,21 @@ function loadFromLocalStorage(){
     return undefined
     }
 }
+const sagaMiddleware=createSagaMiddleware();
 const rootReducer = combineReducers({
-cart: cartReducer
+cart: cartReducer,
+products: productsReducer
 })
 const persistedState= loadFromLocalStorage()
+const reduxDevTools =
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__();
 
 const store = createStore(
     rootReducer,
     persistedState,
-    window.__REDUX_DEVTOOLS_EXTENSION__&&window.__REDUX_DEVTOOLS_EXTENSION__()
+    compose(applyMiddleware(sagaMiddleware), reduxDevTools)
 )
-
+sagaMiddleware.run(watchProducts);
 store.subscribe(()=>saveToLocalStorage(store.getState()))
 
 

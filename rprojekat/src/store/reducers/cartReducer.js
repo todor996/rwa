@@ -1,4 +1,4 @@
-import * as actions from '../actions'
+import * as actions from '../actions/actionType'
 
 const cartWithoutItem=(cart,item)=>cart.filter(cartItem=>cartItem.id!==item.id)
 

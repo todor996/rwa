@@ -1,13 +1,15 @@
 import React from 'react'
 import ProductListItem from './product-list-item'
 import {connect} from 'react-redux'
-import * as actions from '../../store/actions'
+import * as actions from '../../store/actions/actionType'
 
 function ProductListing(props){
     return <div className="product-listing">
         {
-            props.products.map(product=>
+            
+        props.products.map(product=>
             <ProductListItem product={product}
+            key={props.id}
             addToCart={props.addToCart}
             removeFromCart={props.removeFromCart}
             cartItem={props.cart.filter(cartItem=>cartItem.id===product.id)[0]}
@@ -18,7 +20,8 @@ function ProductListing(props){
 
 function mapStateToProps(state) {
     return {
-        cart: state.cart
+        cart: state.cart,
+        products: state.products.products
     }
 }
 

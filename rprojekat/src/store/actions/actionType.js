@@ -1,0 +1,10 @@
+export const ADD='ADD';
+export const REMOVE='REMOVE';
+export const ALL='ALL';
+
+export const FETCH_PRODUCTS = 'FETCH_PRODUCTS';
+export const FETCH_PRODUCTS_START = 'FETCH_PRODUCTS_START';
+export const FETCH_PRODUCTS_SUCCESS = 'FETCH_PRODUCTS_SUCCESS';
+export const FETCH_PRODUCTS_FAIL = 'FETCH_PRODUCTS_FAIL';
+
+
