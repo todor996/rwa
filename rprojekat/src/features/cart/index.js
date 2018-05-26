@@ -39,7 +39,7 @@ function Cart(props){
                     <td>
                         <button className="btn btn-default btn-sm"
                         onClick={()=>props.removeAllFromCart(item)}
-                        ><span class="glyphicon glyphicon-remove"></span> </button>
+                        ><span className="glyphicon glyphicon-remove"></span> </button>
                     </td>
                 </tr>)
             }
