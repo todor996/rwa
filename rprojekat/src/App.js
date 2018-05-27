@@ -7,7 +7,6 @@ const Navigation=(props)=><nav className="navbar navbar-inverse">
 <li><NavLink to='/'>Home </NavLink></li>
 <li><NavLink to='/cart'>Cart </NavLink></li>
 
-
 </ul>
   </nav>
 

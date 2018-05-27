@@ -41,8 +41,21 @@ function Cart(props){
                         onClick={()=>props.removeAllFromCart(item)}
                         ><span className="glyphicon glyphicon-remove"></span> </button>
                     </td>
-                </tr>)
-            }
+                   
+                </tr>
+                
+            
+            )
+           }  <tr>
+                
+                <td>
+                       <button className="btn btn-default btn-md" 
+                        onClick={()=>props.checkOut(props.cart)}>
+                       CheckOut</button> 
+                </td>
+                
+            </tr>
+          
         </tbody>
     </table>
 
@@ -64,6 +77,9 @@ function mapDispatchToProps(dispatch){
         },
         removeAllFromCart: (item)=>{
             dispatch({type:actions.ALL,payload:item})
+        },
+        checkOut:(item)=>{
+            dispatch({type:actions.BUY_PRODUCTS,payload:item})
         }
     }
 

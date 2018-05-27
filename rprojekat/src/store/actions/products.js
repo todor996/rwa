@@ -5,7 +5,7 @@ export const fetchProducts=()=>{
      type:actions.FETCH_PRODUCTS
     };
 }
-export const URL='http://localhost:3052/products/';
+export const URL='http://localhost:3052/';
 export const fetchProductsStart=()=>{
     return {
         type:actions.FETCH_PRODUCTS_START

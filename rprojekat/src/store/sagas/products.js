@@ -6,9 +6,10 @@ export function* fetchProductsSaga(action){
     yield put(actions.fetchProductsStart());
 
     try {
-        const response = yield axios.get(actions.URL);
+        const response = yield axios.get(actions.URL+'products');
         yield put(actions.fetchProductsSuccess(response));
     }catch(error){
         yield put(actions.fetchProductsFail(error));
     }
 }
+

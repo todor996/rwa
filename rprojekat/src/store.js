@@ -3,7 +3,7 @@ import cartReducer from './store/reducers/cartReducer'
 import productsReducer from './store/reducers/productReducer'
 import createSagaMiddleware from "redux-saga";
 
-import {watchProducts} from './store/sagas/index';
+import {watchProducts,watchCart} from './store/sagas/index';
 function saveToLocalStorage(state){
     try{
         const serializedState=JSON.stringify(state)
@@ -41,6 +41,7 @@ const store = createStore(
     compose(applyMiddleware(sagaMiddleware), reduxDevTools)
 )
 sagaMiddleware.run(watchProducts);
+sagaMiddleware.run(watchCart);
 store.subscribe(()=>saveToLocalStorage(store.getState()))
 
 

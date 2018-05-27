@@ -1,5 +1,5 @@
 import * as actions from '../actions/actionType'
-
+const initialState=[];
 const cartWithoutItem=(cart,item)=>cart.filter(cartItem=>cartItem.id!==item.id)
 
 const itemInCart=(cart,item)=> cart.filter(cartItem=>cartItem.id===item.id)[0]
@@ -10,7 +10,10 @@ const addToCart=(cart,item)=>{
     ?[...cartWithoutItem(cart,item),{...item,quantity:1}]
     :[...cartWithoutItem(cart,item),{...cartItem, quantity:cartItem.quantity+1}]
 }
-
+const checkOut=(cart)=>{
+    console.log(cart);
+    return cart;
+}
 const removeFromCart=(cart,item)=>{
     return item.quantity===1
     ?[ ...cartWithoutItem(cart,item)]
@@ -20,7 +23,7 @@ const removeFromCart=(cart,item)=>{
 const removeAllFromCart=(cart,item)=>{
     return [...cartWithoutItem(cart,item)]
 }
-const cartReducer=(state=[], action)=>{
+const cartReducer=(state=initialState, action)=>{
     switch(action.type){
         case actions.ADD:
             return addToCart(state, action.payload)
@@ -29,6 +32,10 @@ const cartReducer=(state=[], action)=>{
 
         case actions.ALL:
         return removeAllFromCart(state,action.payload)
+        case actions.BUY_PRODUCTS:
+        return checkOut(state)
+        case actions.BUY_PRODUCTS_SUCCESS:
+        return initialState
         default: return state;    
     
     
