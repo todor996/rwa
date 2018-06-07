@@ -12,9 +12,10 @@ import { NewTrainingComponent } from './training/new-training/new-training.compo
 import { PastTrainingsComponent } from './training/past-trainings/past-trainings.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import {AppRoutingModule} from './app-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './nav/header/header.component';
 import { SidenavListComponent } from './nav/sidenav-list/sidenav-list.component';
+import { StopTrainingComponent } from './training/current-training/stop-training.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -26,7 +27,8 @@ import { SidenavListComponent } from './nav/sidenav-list/sidenav-list.component'
     PastTrainingsComponent,
     WelcomeComponent,
     HeaderComponent,
-    SidenavListComponent
+    SidenavListComponent,
+    StopTrainingComponent
   ],
   imports: [
     BrowserModule,
@@ -34,9 +36,11 @@ import { SidenavListComponent } from './nav/sidenav-list/sidenav-list.component'
     MaterialModule,
     AppRoutingModule,
     FlexLayoutModule,
-    FormsModule
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents:[StopTrainingComponent] //components not instantiated with routing/selector template
 })
 export class AppModule { }
