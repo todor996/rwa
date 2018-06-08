@@ -16,6 +16,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HeaderComponent } from './nav/header/header.component';
 import { SidenavListComponent } from './nav/sidenav-list/sidenav-list.component';
 import { StopTrainingComponent } from './training/current-training/stop-training.component';
+import {AuthService} from './auth/auth.service'
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,7 +40,7 @@ import { StopTrainingComponent } from './training/current-training/stop-training
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [AuthService],
   bootstrap: [AppComponent],
   entryComponents:[StopTrainingComponent] //components not instantiated with routing/selector template
 })
