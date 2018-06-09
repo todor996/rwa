@@ -6,7 +6,7 @@ import {Subscription} from 'rxjs';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent implements OnInit,OnDestroy {
   @Output() sidenavToggle=new EventEmitter<void>()
   constructor(private authService:AuthService) { }
   isAuth:boolean;

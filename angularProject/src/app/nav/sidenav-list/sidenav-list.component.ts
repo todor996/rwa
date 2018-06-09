@@ -6,7 +6,7 @@ import {Subscription} from 'rxjs';
   templateUrl: './sidenav-list.component.html',
   styleUrls: ['./sidenav-list.component.css']
 })
-export class SidenavListComponent implements OnInit {
+export class SidenavListComponent implements OnInit,OnDestroy {
   @Output() closeSidenav = new EventEmitter<void>();
   isAuth:boolean;
   authSubscription:Subscription;
