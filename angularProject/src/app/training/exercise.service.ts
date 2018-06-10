@@ -34,10 +34,14 @@ export class ExerciseService{
         this.exercises.push({
             ...this.runningExercise,
             duration:this.runningExercise.duration*(progress/100),
-            calories:this.runningExercise.duration*(progress/100),
+            calories:this.runningExercise.calories*(progress/100),
             date:new Date(),
             state:'canceled'});
+            console.log(this.exercises);
         this.runningExercise=null;
         this.exerciseChange.next(null);
+    }
+    getCompletedOrCancelledExercises(){
+        return this.exercises.slice();
     }
 }
