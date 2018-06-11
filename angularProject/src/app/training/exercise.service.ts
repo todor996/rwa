@@ -1,17 +1,34 @@
 import { Exercise } from "./exercise.model";
+import {map} from 'rxjs/operators';
 import {Subject} from "rxjs";
+import {Injectable} from '@angular/core';
+import {AngularFirestore} from 'angularfire2/firestore';
+@Injectable()
 export class ExerciseService{
+    constructor(private db:AngularFirestore){}
     exerciseChange=new Subject<Exercise>();
-    availableExercises:Exercise[]=[
-    {id:'Suicide',name:'Suicide',duration:40,calories:30},
-    {id:'Plank',name:'Plank',duration:30,calories:20},
-    {id:'burpees',name:'burpees',duration:60,calories:5},
-    {id:'Squats',name:'Squats',duration:60,calories:21}
-    ];
+    exercisesChanged=new Subject<Exercise[]>();
+    private availableExercises:Exercise[]=[];
     private runningExercise:Exercise;
     private exercises:Exercise[]=[];
-    getAvailableExercises(){
-        return this.availableExercises.slice();
+    fetchAvailableExercises(){
+        this.db
+    .collection('Exercises')
+    .snapshotChanges()
+    .pipe(map(docArray=>{
+return docArray.map(doc=>{
+  return    {
+    id:doc.payload.doc.id,
+    name:doc.payload.doc.data()['name'],
+    duration:doc.payload.doc.data()['duration'],
+    calories:doc.payload.doc.data()['calories']
+         }
+        })
+    }))
+    .subscribe((exercises:Exercise[])=>{
+        this.availableExercises=exercises;
+        this.exercisesChanged.next([...this.availableExercises]);
+    }
     }
     startExercise(selectedId:string){
 
