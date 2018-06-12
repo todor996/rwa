@@ -8,9 +8,9 @@ export class ExerciseService{
     constructor(private db:AngularFirestore){}
     exerciseChange=new Subject<Exercise>();
     exercisesChanged=new Subject<Exercise[]>();
+    finishedExercisesChanged=new Subject<Exercise[]>();
     private availableExercises:Exercise[]=[];
     private runningExercise:Exercise;
-    private exercises:Exercise[]=[];
     fetchAvailableExercises(){
     this.db
     .collection('Exercises')
@@ -31,7 +31,6 @@ export class ExerciseService{
     })
 }
     startExercise(selectedId:string){
-
     this.runningExercise=this.availableExercises.find(ex=>ex.id===selectedId);
     this.exerciseChange.next({...this.runningExercise});
     }
@@ -54,12 +53,14 @@ export class ExerciseService{
             calories:this.runningExercise.calories*(progress/100),
             date:new Date(),
             state:'canceled'});
-            console.log(this.exercises);
         this.runningExercise=null;
         this.exerciseChange.next(null);
     }
-    getCompletedOrCancelledExercises(){
-        return this.exercises.slice();
+    fetchCompletedOrCancelledExercises(){
+        this.db.collection('finishedExercises').valueChanges()
+        .subscribe((exercises: Exercise[])=>{
+            this.finishedExercisesChanged.next(exercises);
+        });
     }
 
     private addExerciseToFirebase(exercise: Exercise){

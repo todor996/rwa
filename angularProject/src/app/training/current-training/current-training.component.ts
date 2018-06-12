@@ -11,7 +11,7 @@ import { ExerciseService } from '../exercise.service';
 export class CurrentTrainingComponent implements OnInit {
   progress=0;
   @Output() trainingExit = new EventEmitter();
-  timer: number;
+  timer;
 
   constructor(private dialog:MatDialog,private exerciseService:ExerciseService) { }
 

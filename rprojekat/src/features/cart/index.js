@@ -1,10 +1,10 @@
 import React from 'react'
 import {connect } from 'react-redux'
 import * as actions from '../../store/actions/actionType'
-function sort(items){
-    return items.sort((a,b)=>{
-    a.id<b.id
-    })
+function sr(a,b){
+    return a.id<b.id
+    
+    
 }
 
 
@@ -21,7 +21,7 @@ function Cart(props){
         </thead>
         <tbody>
             {
-                sort(props.cart).map(item=><tr>
+                props.cart.sort(sr).map(item=><tr>
                     <td>{item.name}</td>
                     <td>{item.quantity}</td>
                     <td>
