@@ -12,24 +12,24 @@ export class ExerciseService{
     private runningExercise:Exercise;
     private exercises:Exercise[]=[];
     fetchAvailableExercises(){
-        this.db
+    this.db
     .collection('Exercises')
     .snapshotChanges()
     .pipe(map(docArray=>{
-return docArray.map(doc=>{
-  return    {
-    id:doc.payload.doc.id,
-    name:doc.payload.doc.data()['name'],
-    duration:doc.payload.doc.data()['duration'],
-    calories:doc.payload.doc.data()['calories']
-         }
-        })
+    return docArray.map(doc=>{
+    return{
+        id:doc.payload.doc.id,
+        name:doc.payload.doc.data()['name'],
+        duration:doc.payload.doc.data()['duration'],
+        calories:doc.payload.doc.data()['calories']
+    }
+    })
     }))
     .subscribe((exercises:Exercise[])=>{
         this.availableExercises=exercises;
         this.exercisesChanged.next([...this.availableExercises]);
-    }
-    }
+    })
+}
     startExercise(selectedId:string){
 
     this.runningExercise=this.availableExercises.find(ex=>ex.id===selectedId);
@@ -39,7 +39,7 @@ return docArray.map(doc=>{
         return {...this.runningExercise};
     }
     completeExercise(){
-        this.exercises.push({
+        this.addExerciseToFirebase({
             ...this.runningExercise,
             date:new Date(),
             state:'completed'});
@@ -48,7 +48,7 @@ return docArray.map(doc=>{
     }
 
     cancelExercise(progress:number){
-        this.exercises.push({
+        this.addExerciseToFirebase({
             ...this.runningExercise,
             duration:this.runningExercise.duration*(progress/100),
             calories:this.runningExercise.calories*(progress/100),
@@ -60,5 +60,9 @@ return docArray.map(doc=>{
     }
     getCompletedOrCancelledExercises(){
         return this.exercises.slice();
+    }
+
+    private addExerciseToFirebase(exercise: Exercise){
+        this.db.collection('finishedExercises').add(exercise);
     }
 }
