@@ -6,10 +6,16 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ExerciseService } from '../training/exercise.service';
+import { MatSnackBar } from '@angular/material';
+import { UtilityService } from '../shared/utility.service';
 @Injectable()
 export class AuthService{
     private user: User;
-    constructor(private router:Router,private fireAuth:AngularFireAuth,private exerciseService:ExerciseService){
+    constructor(
+        private router:Router,
+        private fireAuth:AngularFireAuth,
+        private exerciseService:ExerciseService,
+        private utilityService:UtilityService){
     }
     authChange=new Subject<boolean>();
     private authenticated=false;
@@ -18,7 +24,7 @@ export class AuthService{
             if(user){
                 this.authenticated=true;
                 this.authChange.next(true);
-           this.router.navigate(['/training']);  
+                this.router.navigate(['/training']);  
             }
             else{
                 this.exerciseService.cancelSubscription();
@@ -30,25 +36,32 @@ export class AuthService{
         })
     }
     registerUser(authData: AuthData){
+        this.utilityService.loadingStateChanged.next(true);
         this.fireAuth.auth.createUserWithEmailAndPassword(authData.email,authData.password)
         .then(res=>{
             console.log(res);
+            this.utilityService.loadingStateChanged.next(false);
         })
-        .catch(err=>{
-            console.log(err)
+        .catch(error=>{
+            this.utilityService.loadingStateChanged.next(false);
+            this.utilityService.showSnackbar(error.message,null,3000)
+
         })
         
         }
     login(authData:AuthData){
-            this.fireAuth.auth.signInWithEmailAndPassword(authData.email,authData.password)
+        this.utilityService.loadingStateChanged.next(true);
+        this.fireAuth.auth.signInWithEmailAndPassword(authData.email,authData.password)
             .then(res=>{
                 console.log(res);
+                this.utilityService.loadingStateChanged.next(false);
         
             })
-            .catch(err=>{
-                console.log(err)
+            .catch(error=>{
+                this.utilityService.loadingStateChanged.next(false);
+                this.utilityService.showSnackbar(error.message,null,3000)
             })
-         }
+        }
     logout(){
         
             this.fireAuth.auth.signOut();

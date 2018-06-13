@@ -14,8 +14,17 @@ export class NewTrainingComponent implements OnInit,OnDestroy {
   constructor(private exerciseService:ExerciseService,private db:AngularFirestore) { }
   exercises:Exercise[];
   exerciseSubscription:Subscription;
+  isLoading=true;
   ngOnInit() {
-    this.exerciseSubscription=this.exerciseService.exercisesChanged.subscribe(exercises=>this.exercises=exercises);
+    this.exerciseSubscription=this.exerciseService.exercisesChanged.subscribe(
+      exercises=>{
+        this.exercises=exercises
+      this.isLoading=false;
+      });
+      this.fetchExercises();
+
+  }
+  fetchExercises(){
     this.exerciseService.fetchAvailableExercises();
 
   }
@@ -24,6 +33,8 @@ export class NewTrainingComponent implements OnInit,OnDestroy {
   this.exerciseService.startExercise(form.value.exercise);
   }
  ngOnDestroy(){
+   if(this.exerciseSubscription)
    this.exerciseSubscription.unsubscribe();
- }
+  
+  }
 }
