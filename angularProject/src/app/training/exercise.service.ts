@@ -5,9 +5,12 @@ import {Subscription} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {AngularFirestore} from 'angularfire2/firestore';
 import { UtilityService } from "../shared/utility.service";
+import * as UI from '../shared/ui.actions';
+import * as fromRoot from '../app.reducer';
+import {Store} from '@ngrx/store';
 @Injectable()
 export class ExerciseService{
-    constructor(private db:AngularFirestore ,private utilityService:UtilityService){}
+    constructor(private db:AngularFirestore ,private utilityService:UtilityService,private store:Store<fromRoot.State>){}
     exerciseChange=new Subject<Exercise>();
     exercisesChanged=new Subject<Exercise[]>();
     finishedExercisesChanged=new Subject<Exercise[]>();
@@ -15,6 +18,7 @@ export class ExerciseService{
     private runningExercise:Exercise;
     private fbSubscriptions:Subscription[]=[];
     fetchAvailableExercises(){
+        this.store.dispatch(new UI.StartLoading())
         this.fbSubscriptions.push(this.db
         .collection('Exercises')
         .snapshotChanges()
@@ -29,10 +33,12 @@ export class ExerciseService{
         })
     }))
     .subscribe((exercises:Exercise[])=>{
+        this.store.dispatch(new UI.StopLoading())
+
         this.availableExercises=exercises;
         this.exercisesChanged.next([...this.availableExercises]);
     },error=>{
-        this.utilityService.loadingStateChanged.next(false);
+        this.store.dispatch(new UI.StopLoading())
     this.utilityService.showSnackbar('Fetching failed,try again later',null,3000);
     this.exercisesChanged.next(null);
 

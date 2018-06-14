@@ -16,6 +16,8 @@ import { ExerciseService } from './training/exercise.service';
 import {environment} from '../environments/environment'
 import { UtilityService } from './shared/utility.service';
 import {AuthModule} from './auth/auth.module';
+import {StoreModule} from '@ngrx/store';
+import {reducers} from './app.reducer';
 @NgModule({
   declarations: [
     AppComponent,
@@ -32,7 +34,8 @@ import {AuthModule} from './auth/auth.module';
     FlexLayoutModule,
     AngularFireModule.initializeApp(environment.firebase),
     AuthModule,
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    StoreModule.forRoot(reducers)
   ],
   providers: [AuthService,ExerciseService,UtilityService],
   bootstrap: [AppComponent]
