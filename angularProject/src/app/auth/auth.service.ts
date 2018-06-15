@@ -42,6 +42,7 @@ export class AuthService{
        this.store.dispatch(new UI.StartLoading()); 
        this.fireAuth.auth.createUserWithEmailAndPassword(authData.email,authData.password)
         .then(res=>{
+            localStorage.setItem('user',authData.email);
             console.log(res);
             this.store.dispatch(new UI.StopLoading()); 
 
@@ -58,6 +59,7 @@ export class AuthService{
         this.store.dispatch(new UI.StartLoading()) 
         this.fireAuth.auth.signInWithEmailAndPassword(authData.email,authData.password)
             .then(res=>{
+                localStorage.setItem('user',authData.email);
                 console.log(res);
                 this.store.dispatch(new UI.StopLoading()) 
         
@@ -70,6 +72,7 @@ export class AuthService{
     logout(){
         
             this.fireAuth.auth.signOut();
+            localStorage.removeItem('user');
         }
     
    

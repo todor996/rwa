@@ -1,58 +1,62 @@
 import { Action,createFeatureSelector,createSelector } from '@ngrx/store';
+import { EntityState, createEntityAdapter } from '@ngrx/entity';
 
-import {TrainingActions,SET_AVAILABLE_TRAININGS,SET_FINISHED_TRAININGS,START_TRAINING,STOP_TRAINING} from './training.actions';
+import {TrainingActions,GET_AVAILABLE_TRAININGS,START_TRAINING,STOP_TRAINING} from './training.actions';
 import { Exercise } from './exercise.model';
 import * as fromRoot from '../app.reducer';
-export interface TrainingState {
+/*export interface TrainingState {
   availableExercises: Exercise[];
   finishedExercises: Exercise[];
   activeTraining:Exercise;
+}*/
+
+const trainingAdapter=createEntityAdapter<Exercise>();
+export interface State extends EntityState<Exercise>{
+
+  activeTraining:Exercise|null
 }
 
 
-export interface State extends fromRoot.State{
-    training:TrainingState
-}
-const initialState: TrainingState = {
-  availableExercises:[],
-  finishedExercises:[],
+const defaultState = {
+  ids:[],
+  entities:{},
   activeTraining:null
 };
-
-export function trainingReducer(state = initialState, action: TrainingActions) {
+export const initialState:State=trainingAdapter.getInitialState(defaultState);
+export function trainingReducer(state:State = initialState, action: TrainingActions) {
   switch (action.type) {
-    case SET_AVAILABLE_TRAININGS:
-      return {
-        ...state,
-        availableExercises:action.payload
-    };
-    case SET_FINISHED_TRAININGS:
-      return {
-        ...state,
-        finishedExercises:action.payload
-      };
+    case GET_AVAILABLE_TRAININGS:
+      
+      return trainingAdapter.addAll(action.payload,state);
+    
       case START_TRAINING:
       return {
         ...state,
-        activeTraining:{...state.availableExercises.find(ex=>ex.id===action.payload)}
+        activeTraining:Object.values(state.entities).find(s=>s.id===action.payload)
       };
       case STOP_TRAINING:
       return {
         ...state,
         activeTraining:null    
     };
+     
     default: {
-      return state;
+      return {...state};
     }
   }
 }
 
 
 
-export const getTrainingState=createFeatureSelector<TrainingState>('training');
+export const getTrainingState=createFeatureSelector<State>('training');
 
+export const {
+selectAll,
+selectIds,
+selectEntities,
+selectTotal
+} =trainingAdapter.getSelectors(getTrainingState);  
 
-export const getAvailableExercises=createSelector(getTrainingState,(state: TrainingState)=>state.availableExercises);
-export const getFinishedExercises=createSelector(getTrainingState,(state: TrainingState)=>state.finishedExercises);
-export const getActiveTraining=createSelector(getTrainingState,(state:TrainingState)=>state.activeTraining);
-export const getIsTraining=createSelector(getTrainingState,(state:TrainingState)=>state.activeTraining!=null);
+//export const getAvailableExercises=createSelector(getTrainingState,(state: TrainingState)=>state.availableExercises);
+export const getActiveTraining=createSelector(getTrainingState,(state:State)=>state.activeTraining);
+export const getIsTraining=createSelector(getTrainingState,(state:State)=>state.activeTraining!=null);

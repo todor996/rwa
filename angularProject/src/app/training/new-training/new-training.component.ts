@@ -20,7 +20,8 @@ export class NewTrainingComponent implements OnInit{
   isLoading$:Observable<boolean>
     ngOnInit() {
     this.isLoading$=this.store.select(fromRoot.getIsLoading);
-    this.exercises$=this.store.select(fromTraining.getAvailableExercises);
+    this.exercises$=this.store.select(fromTraining.selectAll);
+    console.log(this.exercises$);
     this.fetchExercises();
 
   }

@@ -18,6 +18,9 @@ import { UtilityService } from './shared/utility.service';
 import {AuthModule} from './auth/auth.module';
 import {StoreModule} from '@ngrx/store';
 import {reducers} from './app.reducer';
+import {EffectsModule } from '@ngrx/effects';
+//import {TrainingEffects} from './training/training.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,7 +38,11 @@ import {reducers} from './app.reducer';
     AngularFireModule.initializeApp(environment.firebase),
     AuthModule,
     AngularFirestoreModule,
-    StoreModule.forRoot(reducers)
+    StoreModule.forRoot(reducers),
+    //EffectsModule.forRoot([TrainingEffects]),
+    StoreDevtoolsModule.instrument({
+      maxAge:25
+    })
   ],
   providers: [AuthService,ExerciseService,UtilityService],
   bootstrap: [AppComponent]

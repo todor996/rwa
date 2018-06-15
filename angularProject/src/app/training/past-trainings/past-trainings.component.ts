@@ -6,6 +6,8 @@ import {Subscription} from 'rxjs';
 import {Store} from '@ngrx/store';
 import * as fromTraining from '../training.reducer';
 import { DatePipe } from '@angular/common';
+import * as Training from '../training.actions';
+import * as fromFinishedTraining from '../finishedTraining.reducer';
 @Component({
   selector: 'app-past-trainings',
   templateUrl: './past-trainings.component.html',
@@ -18,11 +20,13 @@ export class PastTrainingsComponent implements OnInit,AfterViewInit {
 @ViewChild(MatSort) sort:MatSort;
 @ViewChild(MatPaginator) paginator:MatPaginator;
   ngOnInit() {
-    this.store.select(fromTraining.getFinishedExercises).subscribe((exercises:Exercise[])=>{
+    this.exerciseService.fetchCompletedOrCancelledExercises(); 
+    this.store.select(fromFinishedTraining.selectAll).subscribe((exercises:Exercise[])=>{
+  
       this.dataSource.data=exercises;
     })
 
-    this.exerciseService.fetchCompletedOrCancelledExercises(); 
+    
   }
   ngAfterViewInit(){
     this.dataSource.sort=this.sort;
@@ -31,5 +35,6 @@ export class PastTrainingsComponent implements OnInit,AfterViewInit {
   doFilter(filterValue:string){
       this.dataSource.filter=filterValue.trim().toLowerCase();
   }
- 
+  
+
 }

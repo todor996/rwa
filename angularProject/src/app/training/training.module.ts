@@ -8,6 +8,9 @@ import { SharedModule } from "../shared/shared.module";
 import { TrainingRoutingModule } from "./training-routing.module";
 import {StoreModule} from '@ngrx/store'
 import {trainingReducer} from './training.reducer';
+import {finishedTrainingReducer} from './finishedTraining.reducer';
+import {EffectsModule} from '@ngrx/effects';
+//import {TrainingEffects} from './training.effects';
 @NgModule({
     declarations:[
         TrainingComponent,
@@ -19,7 +22,8 @@ import {trainingReducer} from './training.reducer';
     imports:[
 SharedModule,
 TrainingRoutingModule,
-StoreModule.forFeature('training',trainingReducer)
+StoreModule.forFeature('training',trainingReducer),
+StoreModule.forFeature('finishedTraining',finishedTrainingReducer)
 ],
 entryComponents:[StopTrainingComponent] //components not instantiated with routing/selector template
 
