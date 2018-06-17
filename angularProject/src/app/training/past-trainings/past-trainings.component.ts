@@ -14,7 +14,7 @@ import * as fromFinishedTraining from '../finishedTraining.reducer';
   styleUrls: ['./past-trainings.component.css']
 })
 export class PastTrainingsComponent implements OnInit,AfterViewInit {
-  displayedColumns=['date','name','duration','calories','state'];
+  displayedColumns=['date','name','duration','calories','state','rating'];
   dataSource=new MatTableDataSource<Exercise>();
   constructor(private exerciseService:ExerciseService,private store:Store<fromTraining.State>) { }
 @ViewChild(MatSort) sort:MatSort;
@@ -35,6 +35,9 @@ export class PastTrainingsComponent implements OnInit,AfterViewInit {
   doFilter(filterValue:string){
       this.dataSource.filter=filterValue.trim().toLowerCase();
   }
-  
+  rate(exercise:Exercise,val:number){
+    console.log(exercise);
+    this.store.dispatch(new Training.Rate({exercise,val}));
+  }
 
 }

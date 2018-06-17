@@ -3,7 +3,7 @@ export interface Exercise{
     name:string;
     duration:number;
     calories:number;
-    likes:number;
+    rating:number;
     date?:Date;
     loading:boolean;
     id:string;

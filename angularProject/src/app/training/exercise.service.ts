@@ -27,7 +27,7 @@ export class ExerciseService{
             name:doc.payload.doc.data()['name'],
             duration:doc.payload.doc.data()['duration'],
             calories:doc.payload.doc.data()['calories'],
-            likes:doc.payload.doc.data()['likes']
+            rating:doc.payload.doc.data()['rating']
             }
         })
     }))

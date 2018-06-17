@@ -11,6 +11,7 @@ import {trainingReducer} from './training.reducer';
 import {finishedTrainingReducer} from './finishedTraining.reducer';
 import {EffectsModule} from '@ngrx/effects';
 //import {TrainingEffects} from './training.effects';
+import {} from 'angular-jk-rating-stars'
 @NgModule({
     declarations:[
         TrainingComponent,

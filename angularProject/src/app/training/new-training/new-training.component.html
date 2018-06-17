@@ -6,7 +6,7 @@
           <mat-form-field *ngIf="!(isLoadin$|async) &&exercises$|async">
             <mat-select placeholder="Choose Exercise" ngModel name="exercise" required>
               <mat-option *ngFor="let exercise of exercises$ |async" [value]="exercise.id">
-                {{ exercise.name }}
+               <span>{{ exercise.name}} Upvoted: {{exercise.rating}}</span> 
               </mat-option>
             </mat-select>
           </mat-form-field>

@@ -19,7 +19,7 @@ import {AuthModule} from './auth/auth.module';
 import {StoreModule} from '@ngrx/store';
 import {reducers} from './app.reducer';
 import {EffectsModule } from '@ngrx/effects';
-//import {TrainingEffects} from './training/training.effects';
+import {TrainingEffect} from './training/training.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 @NgModule({
   declarations: [
@@ -39,7 +39,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
     AuthModule,
     AngularFirestoreModule,
     StoreModule.forRoot(reducers),
-    //EffectsModule.forRoot([TrainingEffects]),
+    EffectsModule.forRoot([TrainingEffect]),
     StoreDevtoolsModule.instrument({
       maxAge:25
     })
