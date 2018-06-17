@@ -13,14 +13,16 @@ import * as fromRoot from '../app.reducer';
 const trainingAdapter=createEntityAdapter<Exercise>();
 export interface State extends EntityState<Exercise>{
 
-  activeTraining:Exercise|null
+  activeTraining:Exercise|null,
+  selectedId:string|null
 }
 
 
 const defaultState = {
   ids:[],
   entities:{},
-  activeTraining:null
+  activeTraining:null,
+  selectedId:null
 };
 export const initialState:State=trainingAdapter.getInitialState(defaultState);
 export function trainingReducer(state:State = initialState, action: TrainingActions) {
@@ -30,16 +32,16 @@ export function trainingReducer(state:State = initialState, action: TrainingActi
       return trainingAdapter.addAll(action.payload,state);
     
       case START_TRAINING:
-      return trainingAdapter.removeAll({ ...state, activeTraining:Object.values(state.entities).find(s=>s.id===action.payload) }); 
+      return { ...state, activeTraining:Object.values(state.entities).find(s=>s.id===action.payload) };  
       
       case STOP_TRAINING:
-      return trainingAdapter.removeAll({...state,activeTraining:null});
+      return {...state,activeTraining:null}
       case RATE:
-      return trainingAdapter.removeAll({...state,...action.payload,load:true});
+      return {...state,...action.payload,load:true};
       case RATE_SUCCESS:
-      return trainingAdapter.removeAll({...state,load:false});
+      return {...state,load:false};
       case RATE_FAIL:
-      return trainingAdapter.removeAll({...state,...action.payload,load:false});
+      return {...state,...action.payload,load:false};
     default: {
       return state;
     }
@@ -56,7 +58,8 @@ selectIds,
 selectEntities,
 selectTotal
 } =trainingAdapter.getSelectors(getTrainingState);  
-
+export const getSelectedId=(state:State)=>state.selectedId;
+export const selectPastTraining=createSelector(selectEntities,getSelectedId,(trainingEntity,trainingId)=> trainingEntity[trainingId])
 //export const getAvailableExercises=createSelector(getTrainingState,(state: TrainingState)=>state.availableExercises);
 export const getActiveTraining=createSelector(getTrainingState,(state:State)=>state.activeTraining);
 export const getIsTraining=createSelector(getTrainingState,(state:State)=>state.activeTraining!=null);
