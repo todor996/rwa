@@ -1,5 +1,5 @@
 import { Observable, BehaviorSubject, animationFrame } from './rxjsMiddle';
-import { DIRECTIONS, SPEED, SNAKE_LENGTH, FPS, APPLE_COUNT, POINTS_PER_APPLE } from './konstante';
+import { DIRECTIONS, SPEED, SNAKE_LENGTH, FPS, POINTS_PER_APPLE } from './konstante';
 
 import {
   createCanvasElement,
@@ -16,27 +16,20 @@ import {
   generateApples
 } from './funkcije';
 
-/**
- * Create canvas element and append it to the page
- */
+/*napravi canvas i 2d context*/
 let canvas = createCanvasElement();
 let ctx = canvas.getContext('2d');
 document.body.appendChild(canvas);
 
-/**
- * Starting values
- */
-const INITIAL_DIRECTION = DIRECTIONS[39];
+
+const POCETNA_POZ = DIRECTIONS[39];
 
 /**
  * Determines the speed of the snake
  */
 let ticks$ = Observable.interval(SPEED);
 
-/**
- * Track some general user interactions with the document
- */
-let click$ = Observable.fromEvent(document, 'click');
+
 let keydown$ = Observable.fromEvent(document, 'keydown');
 
 
@@ -48,13 +41,10 @@ let direction$ = keydown$
   .map((event) => DIRECTIONS[event.keyCode])
   .filter(direction => !!direction)
   .scan(nextDirection)
-  .startWith(INITIAL_DIRECTION)
+  .startWith(POCETNA_POZ)
   .distinctUntilChanged();
 
-/**
- * Broadcasting mechanism used to notify subscribers of collisions 
- * between the snake and the apples
- */
+//Obavesti sve kolika je duzina zmijice
 let length$ = new BehaviorSubject(SNAKE_LENGTH);
 /**
  * Accumulates the length of the snake (number of body segments)
@@ -109,8 +99,11 @@ let game$ = Observable.interval(1000 / FPS, animationFrame)
   .withLatestFrom(scene$, (_, scene) => scene)
   .takeWhile(scene => !isGameOver(scene))
   .subscribe({
-    next: (scene) =>
+    next: (scene) =>{
+      console.log(scene$);
       renderScene(ctx, scene)
+
+    }
     ,
     complete: () => renderGameOver(canvas)
   });

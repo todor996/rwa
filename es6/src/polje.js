@@ -80,7 +80,9 @@ function fillTable(table,array){
   table.appendChild(thead);
 
   table.style.border="1px solid black";
-  array.forEach(obj=>{
+  array
+  .filter(a=>a.score>0)
+  .forEach(obj=>{
   tr=document.createElement("tr");
   tdUser=document.createElement("td");
   tdUser.innerText=obj['username'];
